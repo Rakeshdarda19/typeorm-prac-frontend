@@ -1,25 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import { ApolloClient, InMemoryCache, ApolloProvider, useMutation } from '@apollo/client';
+import CreateUser from './Components/CreateUser';
+import ListOfUsers from './Components/ListOfUser';
+import UpdatePassword from './Components/UpdatePassword';
 import './App.css';
-
+import New from './Components/New';
 function App() {
+  const client = new ApolloClient ({
+    uri: "http://localhost:3001/graphql",
+    cache: new InMemoryCache()
+  })
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ApolloProvider client={client}>
+      <CreateUser />
+      <ListOfUsers />
+      <UpdatePassword />
+    </ApolloProvider>
   );
 }
 
